@@ -2,14 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
-
 Infos
 =====
 
    :Projet:             pipParser
    :Nom du fichier:     pipParser.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20170512
+   :Version:            20170513
 
 ####
 
@@ -162,7 +161,7 @@ class C_pipParser( object ) :
         """ Permet de créer le fichier requierement de pip freeze. la commande qui va
             être executée sera : ::
             
-                pip freeze > [nom_du_fichier]
+                pip3 freeze > [nom_du_fichier]
                 
             v_dirPath : Permet de définir le chemin dans lequel est créé le fichier.
             Ce chemin est utilisé comme repertoire de travail (workdir). Si il est définie, la méthode 'f_setFilePath()' sera appellée.
@@ -181,7 +180,7 @@ class C_pipParser( object ) :
             self.f_setFileName(v_fileName)
             
         self.f_setFullFileName()
-        os.system( "pip freeze > {}".format(self.f_getFullFileName()[0]) )
+        os.system( "pip3 freeze > {}".format(self.f_getFullFileName()[0]) )
         
 ####
         
@@ -217,7 +216,32 @@ class C_pipParser( object ) :
 ####                                    
 
 def main() :
-    """ Fonction principale """
+    """ Fonction principale
+
+        :arg makefile:      -m ou --makefile. Permet de passer en mode création de fichier.
+                            Le premier fichier est le fichier générer par la commande 
+                            pip3 freeze > nom_du_fichier. Le second fichier générer est
+                            une copie du premier nettoyer des numéros de versions. Ce
+                            second fichier sera nomé de la même façon que le premier
+                            avec le suffixe '_noVers' en plus.
+                            
+        :arg filename:      -f ou --filename. Permet de spécifier le nom du fichier.
+                            Ce nom doit être spécifier sans pathfile l'extension car l'extension '.txt' sera automatiquement ajouté.
+                            
+        :arg pathfile:      -p ou --pathfile. Permet de spécifier le chemin d'accès
+                            des fichiers.
+                            
+        :arg askinfo:       -a ou --askinfo. Lance une invite de commande pour remplir
+                            le nom du fichier et son chemin d'accès.
+                            
+                            Si l'un des arguments 'filename' ou 'pathfile' et passé en même temp que 'askinfo', ils seront ignoré.
+                            
+                            Si aucun nom ou chemin n'est renseigné dans l'invite de
+                            commande, le nom du fichier par défaut sera :
+                            'myRequierment' et le chemin par défaut sera le répertoire
+                            courrant( '.' ).
+    """
+    print(sys.argv)
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--makefile", action='store_true',
                         help="Création des fichiers 'reqierment' et 'requierment_noVers'\n")
@@ -243,12 +267,12 @@ def main() :
         if args.askinfo :
             v_fileName = input("\tEntrez le nom du fichier : ")
             v_dirPath = input("\tEntrez le chemin du fichier à générer : ")
-            
-        if args.filename :
-            v_fileName = args.filename
-            
-        if args.pathfile :
-            v_dirPath = args.pathfile
+        else :
+            if args.filename :
+                v_fileName = args.filename
+                
+            if args.pathfile :
+                v_dirPath = args.pathfile
             
         if v_fileName :
             i_ist.f_setFileName( v_fileName )
