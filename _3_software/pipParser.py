@@ -65,6 +65,7 @@ class C_pipParser( object ) :
                                     # du repertoire local
         self._v_fileName        = 'myRequierment.txt'
         self._v_fileNameNoVers  = 'myRequierment_noVers.txt'
+        self._v_customFile      = 'myRequierment_custom.txt'
         self._t_fullFileName    = os.path.join(self._v_dir, self._v_fileName)
 
 ####
@@ -125,6 +126,7 @@ class C_pipParser( object ) :
         else :
             self._v_fileName = "{}.txt".format(v_fileName)
             self._v_fileNameNoVers = "{}_noVers.txt".format(v_fileName)
+            self._v_customFile = "{}_custom.txt".format(v_fileName)
 
 ####
 
@@ -144,7 +146,8 @@ class C_pipParser( object ) :
         ## Action
         self._t_fullFileName = (
                                     os.path.join(self._v_dir, self._v_fileName),
-                                    os.path.join(self._v_dir, self._v_fileNameNoVers)
+                                    os.path.join(self._v_dir, self._v_fileNameNoVers),
+                                    os.path.join(self._v_dir, self._v_customFile)
                                 )
         
 ####
@@ -188,8 +191,6 @@ class C_pipParser( object ) :
         """ Permet de créer le ficher noVers à partir du fichier générer par pip
         """
         ## Action
-        v_xIndex = 0
-        v_charIndex = 0
         v_chaine = '='
         v_noVersFileToDel = self.f_getFullFileName()[1]
 
@@ -212,13 +213,31 @@ class C_pipParser( object ) :
                                     else :
                                         v_noVersFile.write( v_newLine )
                                     
-
+    def f_makeCustomFile( self ) :
+        """ Permet de créer le fichier 'requierment' en parcourant le dossier '_v_dir'.
+            Tous les fichiers portant l'extention '.whl' seront ajoutés au fichier
+            '_v_customFile'
+        """
+        v_customFileToDel = self.f_getFullFileName()[2]
+        for _, _, l_fichier in os.walk( self._v_dir ) :
+            if v_customFileToDel in l_fichier :
+                os.remove( v_customFileToDel )
+                
+        with open( self.f_getFullFileName()[2], 'a') as v_customFile :
+            for _, _, l_file in os.walk( self._v_dir ) :
+                for i in range( len(l_file) ) :
+                    if l_file[i][-4:] == ".whl" :
+                        v_customFile.write( "{}\n".format(l_file[i]) )
+        
+    
 ####                                    
 
 def main() :
     """ Fonction principale
 
-        :arg makefile:      -m ou --makefile. Permet de passer en mode création de fichier.
+        :arg makefile:      -m ou --makefile. Permet de passer en mode création de
+                            fichier.
+                            
                             Le premier fichier est le fichier générer par la commande 
                             pip3 freeze > nom_du_fichier. Le second fichier générer est
                             une copie du premier nettoyer des numéros de versions. Ce
@@ -226,7 +245,8 @@ def main() :
                             avec le suffixe '_noVers' en plus.
                             
         :arg filename:      -f ou --filename. Permet de spécifier le nom du fichier.
-                            Ce nom doit être spécifier sans pathfile l'extension car l'extension '.txt' sera automatiquement ajouté.
+                            Ce nom doit être spécifier sans pathfile l'extension car
+                            l'extension '.txt' sera automatiquement ajouté.
                             
         :arg pathfile:      -p ou --pathfile. Permet de spécifier le chemin d'accès
                             des fichiers.
@@ -234,29 +254,47 @@ def main() :
         :arg askinfo:       -a ou --askinfo. Lance une invite de commande pour remplir
                             le nom du fichier et son chemin d'accès.
                             
-                            Si l'un des arguments 'filename' ou 'pathfile' et passé en même temp que 'askinfo', ils seront ignoré.
+                            Si l'un des arguments 'filename' ou 'pathfile' et passé en
+                            même temp que 'askinfo', ils seront ignoré.
                             
                             Si aucun nom ou chemin n'est renseigné dans l'invite de
                             commande, le nom du fichier par défaut sera :
                             'myRequierment' et le chemin par défaut sera le répertoire
                             courrant( '.' ).
     """
-    print(sys.argv)
+    msg_makefile    =   ( "- Création des fichiers 'requierment' et "
+                          "'requierment_noVers'" )
+                          
+    msg_filename    =   ( "- Permet de renseigner le nom du fichier" )
+    
+    msg_pathfile    =   ( "- Permet de renseigner le chemin du fichier" )
+    
+    msg_askinfo     =   ( "- Demande le non et le chemin du fichier à générer" )
+    
+    msg_novers      =   ( "- Permet de créer le ficher noVers à partir du fichier" )
+                        
+    msg_custom      =   ( "- Permet de créer le fichier 'requierment' en parcourant le "
+                          "dossier donné dans 'pathfile'. Tous les fichiers portant "
+                          "l'extention '.whl' seront ajoutés au fichier" )
+                        
     parser = argparse.ArgumentParser()
-    parser.add_argument("-m", "--makefile", action='store_true',
-                        help="Création des fichiers 'reqierment' et 'requierment_noVers'\n")
-    parser.add_argument("-f", "--filename", type=str,
-                        help="permet de renseigner le nom du fichier")
-    parser.add_argument("-p", "--pathfile", type=str,
-                        help="permet de renseigner le chemin du fichier")
-    parser.add_argument("-a", "--askinfo", action='store_true',
-                        help="demande le non et le chemin du fichier à générer")
+    parser.add_argument("-m", "--makefile", action='store_true', help=msg_makefile)
+                        
+    parser.add_argument("-f", "--filename", type=str, help=msg_filename)
+                        
+    parser.add_argument("-p", "--pathfile", type=str, help=msg_pathfile)
+                        
+    parser.add_argument("-a", "--askinfo", action='store_true', help=msg_askinfo)
+                        
+    parser.add_argument("--novers", action='store_true',help=msg_novers)
+                             
+    parser.add_argument("--custom", action='store_true', help=msg_custom)
     # parser.add_argument( "-t", "--test", action='store_true', help="activation du mode Test")
                         
     args = parser.parse_args()
     
-    print(args)
-    
+    # print(sys.argv)
+    # print(args)
     if args.makefile :
         print( "mode : création des fichiers\n\n" )
         i_ist = C_pipParser()
@@ -278,12 +316,14 @@ def main() :
             i_ist.f_setFileName( v_fileName )
             
         if v_dirPath :
-            i_ist.f_setFilePath( v_localWorkDir )
-            
+            i_ist.f_setFilePath( v_dirPath )
+                   
         i_ist.f_makeRequiermentFile()
-        i_ist.f_makeNoVersFile()
-        
+        if args.novers :
+                i_ist.f_makeNoVersFile()
 
+        if args.custom :
+            i_ist.f_makeCustomFile()
 
     print("\n\n\t\t fin de la sequence ")    
 
