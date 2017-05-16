@@ -28,10 +28,11 @@ Descriptif
                         partir de la commande 'pip3 freeze'. Ce fichier est utile pour
                         l’installation des paquet sous python.
 
-                        Une première variante du fichier 'nettoyé' des numéros de versions
+                        Une première variante du fichier 'nettoyée' des numéros de versions
                         peut être généré.
                         
-                        Une seconde version 'customisé' peut être généré pour n'avoir que les paquet présent dans un dossier donné.
+                        Une seconde version 'customisée' peut être généré pour n'avoir
+                        que les paquet présent dans un dossier donné.
 
 ####
 
@@ -47,6 +48,8 @@ lexique
    :**i_**:                 Instance
    :**m_**:                 Matrice
    
+####
+   
 """
 
 from __future__ import absolute_import
@@ -57,6 +60,9 @@ sys.path.insert(0,'..')         # ajouter le répertoire précédent au path (no
 import argparse
 
 class C_pipParser( object ) :
+    """ Class permettant d'effectuer des traitemant sur le fichier 'requierments' générer
+        par la commande 'pip freeze'
+    """
     def __init__( self) :
         """ **__init__()**
         
@@ -120,8 +126,9 @@ class C_pipParser( object ) :
         ## Action
         if not v_fileName :
             print( "Le nom du fichier sera : {0}\n" /
-                   "Le nom du fichiers sans version sera : {1}".format(
-                   self._v_fileName, self._v_fileNameNoVers
+                   "Le nom du fichiers sans version sera : {1}\n" /
+                   "Le nom du fichiers customisé sera : {2}".format(
+                   self._v_fileName, self._v_fileNameNoVers, self._v_customFile
                    )
                  )
         else :
@@ -132,10 +139,16 @@ class C_pipParser( object ) :
 ####
 
     def f_getFileName(self) :
-        """ Retourne le nom des fichiers avec et sans version sous la forme d'un tuple
+        """ Retourne le nom des fichiers sous la forme d'un tuple
+        
+            Ces nom sont sous la forme : ::
+            
+                *.txt           --> Fichier générer par pip
+                *_noVers.txt    --> Fichier sans les numéros de version des paquets
+                *_custom        --> Fichier personalisé
         """
         ## Action
-        return (self._v_fileName, self._v_fileNameNoVers)
+        return (self._v_fileName, self._v_fileNameNoVers, self._v_customFile)
             
 ####
 
@@ -146,12 +159,10 @@ class C_pipParser( object ) :
                 [chemin_du_fichier]\[nom_du_fichier]
         """
         ## Action
-        self._t_fullFileName = (
-                                    os.path.join(self._v_dir, self._v_fileName),
-                                    os.path.join(self._v_dir, self._v_fileNameNoVers),
-                                    os.path.join(self._v_dir, self._v_customFile)
-                                )
-        
+        t_fileName = f_getFileName()
+        for i in t_fileName() :
+            self._t_fullFileName.append( os.path.join(self._v_dir, i) )
+                                    
 ####
             
     def f_getFullFileName(self) :
@@ -168,10 +179,10 @@ class C_pipParser( object ) :
             
                 pip3 freeze > [nom_du_fichier]
                 
-            v_dirPath : Permet de définir le chemin dans lequel est créé le fichier.
+            **v_dirPath** : Permet de définir le chemin dans lequel est créé le fichier.
             Ce chemin est utilisé comme répertoire de travail (workdir). Si il est définie, la méthode 'f_setFilePath()' sera appelée.
             
-            v_fileName : Permet de définir le nom du fichier. Si il est définie, la
+            **v_fileName** : Permet de définir le nom du fichier. Si il est définie, la
             méthode 'f_setFileName()' sera appelée.
             
             **N.B** : Le format attendu est de type 'str'
@@ -215,6 +226,8 @@ class C_pipParser( object ) :
                                     else :
                                         v_noVersFile.write( v_newLine )
                                     
+####
+                                    
     def f_makeCustomFile( self ) :
         """ Permet de créer le fichier 'requierment' en parcourant le dossier '_v_dir'.
             Tous les fichiers portant l’extension '.whl' seront ajoutés au fichier
@@ -241,12 +254,15 @@ def main() :
         :arg makefile:      -m ou --makefile. Permet de passer en mode création de
                             fichier.
                             
-                            Le premier fichier est le fichier générer par la commande 
-                            pip3 freeze > nom_du_fichier. Ce fichier sera au minimum l'unique fichier générer.
+                            Le premier fichier est le fichier générer par la commande : :: 
+                                
+                                pip3 freeze > nom_du_fichier. 
+                            
+                            Ce fichier sera au minimum l'unique fichier générer.
                             
         :arg filename:      -f ou --filename. Permet de spécifier le nom du fichier.
-                            Ce nom doit être spécifier sans pathfile l'extension car
-                            l'extension '.txt' sera automatiquement ajouté.
+                            Ce nom doit être spécifier sans l'extension car
+                            l'extension '.txt' sera automatiquement ajoutée.
                             
                             Si aucun nom n'est renseigné , le nom du fichier par défaut
                             sera : 'myRequierment.txt'
@@ -265,7 +281,7 @@ def main() :
                             
                             Si aucun nom ou chemin n'est renseigné dans l'invite de
                             commande, le nom du fichier par défaut sera :
-                            'myRequierment' et le chemin par défaut sera le répertoire
+                            'myRequierment.txt' et le chemin par défaut sera le répertoire
                             courrant( '.' ).
                             
         :arg novers:        --novers. Si cet attribut est ajouté, un fichier

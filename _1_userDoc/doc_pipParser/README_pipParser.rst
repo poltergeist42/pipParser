@@ -12,7 +12,10 @@ pipParser
 Description
 ===========
 
- Ce petit programe permet de créer 2 fichiers requierement pour l'intallation des paquet
- sous python.
+ Ce petit programme permet de créer le fichier 'requierement' à partir de la commande
+ 'pip3 freeze'. Ce fichier est utile pour l’installation des paquet sous python.
 
-Le premier est le fichier classique. Le second fichier est débarrasser des numéro de version qui accompagne chacun des paquet dans le premier fichier. 
+ Une première variante du fichier 'nettoyé' des numéros de versions peut être généré.
+                        
+ Une seconde version 'customisé' peut être généré pour n'avoir que les paquet présent dans
+ un dossier donné.
