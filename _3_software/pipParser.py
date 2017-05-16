@@ -8,7 +8,7 @@ Infos
    :Projet:             pipParser
    :Nom du fichier:     pipParser.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20170513
+   :Version:            20170516
 
 ####
 
@@ -24,12 +24,14 @@ Infos
 Descriptif
 ==========
 
-    :Projet:            Ce petit programe permet de créer 2 fichiers requierement pour
-                        l'intallation des paquet sous python.
+    :Projet:            Ce petit programme permet de créer le fichier 'requierement' à
+                        partir de la commande 'pip3 freeze'. Ce fichier est utile pour
+                        l’installation des paquet sous python.
 
-                        Le premier est le fichier classique. Le second fichier est
-                        débarrasser des numéro de version qui accompagne chacun des
-                        paquet dans le premier fichier..
+                        Une première variante du fichier 'nettoyé' des numéros de versions
+                        peut être généré.
+                        
+                        Une seconde version 'customisé' peut être généré pour n'avoir que les paquet présent dans un dossier donné.
 
 ####
 
@@ -49,7 +51,7 @@ lexique
 
 from __future__ import absolute_import
 import os, sys
-sys.path.insert(0,'..')         # ajouter le repertoire precedent au path (non définitif)
+sys.path.insert(0,'..')         # ajouter le répertoire précédent au path (non définitif)
                                 # pour pouvoir importer les modules et paquets parent
     
 import argparse
@@ -58,11 +60,11 @@ class C_pipParser( object ) :
     def __init__( self) :
         """ **__init__()**
         
-            Creation et initialisation des variables globales de cette Class
+            Création et initialisation des variables globales de cette Class
         """
         self._v_dir             = os.getcwd()
-                                    # os.getcwd() : permet de recuperer le chemin
-                                    # du repertoire local
+                                    # os.getcwd() : permet de récupérer le chemin
+                                    # du répertoire local
         self._v_fileName        = 'myRequierment.txt'
         self._v_fileNameNoVers  = 'myRequierment_noVers.txt'
         self._v_customFile      = 'myRequierment_custom.txt'
@@ -79,7 +81,7 @@ class C_pipParser( object ) :
             
                 del [nom_de_l'_instance]
                 
-            *N.B :* Si l'instance n'est plus utilisee, cette methode est appellee 
+            *N.B :* Si l'instance n'est plus utilisée, cette méthode est appelée 
             automatiquement.
         """
         ## Action
@@ -89,15 +91,14 @@ class C_pipParser( object ) :
 
     def f_setFilePath(self, v_localWorkDir=None) :
         """ Permet de définir le chemin dans lequel est créé le fichier. Ce chemin est
-            utilisé comme repertoire de travail (workdir).
+            utilisé comme répertoire de travail (workdir).
         """
         ## Action
         if v_localWorkDir :
             self._v_dir = os.path.normpath(v_localWorkDir)
             os.chdir(self._v_dir)
-                # permet de déclarer '_v_dir' comme répertoire courrant
         else :
-            print( "Acun chemin n'a été spécifié. le chemin par défaut sera utilisé" /       " : \n {}".format(self._v_dir)
+            print( "Aucun chemin n'a été spécifié. le chemin par défaut sera utilisé" /       " : \n {}".format(self._v_dir)
                  )
                 
 ####
@@ -105,7 +106,7 @@ class C_pipParser( object ) :
     def f_getFilePath(self) :
         """ Retourne le chemin dans lequel est créer le fichier.
         
-            **N.B** : Ce chemin correspond au répertoire courrant (workdir).
+            **N.B** : Ce chemin correspond au répertoire courant (workdir).
         """
         ## Action
         return self._v_dir
@@ -133,6 +134,7 @@ class C_pipParser( object ) :
     def f_getFileName(self) :
         """ Retourne le nom des fichiers avec et sans version sous la forme d'un tuple
         """
+        ## Action
         return (self._v_fileName, self._v_fileNameNoVers)
             
 ####
@@ -162,15 +164,15 @@ class C_pipParser( object ) :
 
     def f_makeRequiermentFile(self, v_dirPath=None, v_fileName=None) :
         """ Permet de créer le fichier requierement de pip freeze. la commande qui va
-            être executée sera : ::
+            être exécutée sera : ::
             
                 pip3 freeze > [nom_du_fichier]
                 
             v_dirPath : Permet de définir le chemin dans lequel est créé le fichier.
-            Ce chemin est utilisé comme repertoire de travail (workdir). Si il est définie, la méthode 'f_setFilePath()' sera appellée.
+            Ce chemin est utilisé comme répertoire de travail (workdir). Si il est définie, la méthode 'f_setFilePath()' sera appelée.
             
             v_fileName : Permet de définir le nom du fichier. Si il est définie, la
-            méthode 'f_setFileName()' sera appellée.
+            méthode 'f_setFileName()' sera appelée.
             
             **N.B** : Le format attendu est de type 'str'
         
@@ -215,9 +217,10 @@ class C_pipParser( object ) :
                                     
     def f_makeCustomFile( self ) :
         """ Permet de créer le fichier 'requierment' en parcourant le dossier '_v_dir'.
-            Tous les fichiers portant l'extention '.whl' seront ajoutés au fichier
+            Tous les fichiers portant l’extension '.whl' seront ajoutés au fichier
             '_v_customFile'
         """
+        ## Action
         v_customFileToDel = self.f_getFullFileName()[2]
         for _, _, l_fichier in os.walk( self._v_dir ) :
             if v_customFileToDel in l_fichier :
@@ -239,28 +242,44 @@ def main() :
                             fichier.
                             
                             Le premier fichier est le fichier générer par la commande 
-                            pip3 freeze > nom_du_fichier. Le second fichier générer est
-                            une copie du premier nettoyer des numéros de versions. Ce
-                            second fichier sera nomé de la même façon que le premier
-                            avec le suffixe '_noVers' en plus.
+                            pip3 freeze > nom_du_fichier. Ce fichier sera au minimum l'unique fichier générer.
                             
         :arg filename:      -f ou --filename. Permet de spécifier le nom du fichier.
                             Ce nom doit être spécifier sans pathfile l'extension car
                             l'extension '.txt' sera automatiquement ajouté.
                             
+                            Si aucun nom n'est renseigné , le nom du fichier par défaut
+                            sera : 'myRequierment.txt'
+                            
         :arg pathfile:      -p ou --pathfile. Permet de spécifier le chemin d'accès
                             des fichiers.
+                            
+                            Si aucun chemin n'est renseigné, le chemin par défaut sera
+                            le répertoire courant( '.' ).
                             
         :arg askinfo:       -a ou --askinfo. Lance une invite de commande pour remplir
                             le nom du fichier et son chemin d'accès.
                             
                             Si l'un des arguments 'filename' ou 'pathfile' et passé en
-                            même temp que 'askinfo', ils seront ignoré.
+                            même temps que 'askinfo', ils seront ignoré.
                             
                             Si aucun nom ou chemin n'est renseigné dans l'invite de
                             commande, le nom du fichier par défaut sera :
                             'myRequierment' et le chemin par défaut sera le répertoire
                             courrant( '.' ).
+                            
+        :arg novers:        --novers. Si cet attribut est ajouté, un fichier
+                            supplémentaire sera généré. Ce fichier est une copie du
+                            premier nettoyer des numéros de versions qui accompagne
+                            normalement chaque noms présent dans le fichiers généré par
+                            'pip'. Ce fichier sera nommé de la même façon que
+                            le premier avec le suffixe '_noVers' en plus.
+                            
+        :arg custom:        --custom. Si cet attribut est ajouté, un fichier
+                            'requierement' sera créer en parcourant le chemin dossier
+                            donné dans 'pathfile'. Tous les fichiers portant l’extension
+                            '.whl' seront ajoutés au fichier. Ce fichier sera nommé de la
+                            même façon que le premier avec le suffixe '_custom' en plus.
     """
     msg_makefile    =   ( "- Création des fichiers 'requierment' et "
                           "'requierment_noVers'" )
@@ -275,7 +294,7 @@ def main() :
                         
     msg_custom      =   ( "- Permet de créer le fichier 'requierment' en parcourant le "
                           "dossier donné dans 'pathfile'. Tous les fichiers portant "
-                          "l'extention '.whl' seront ajoutés au fichier" )
+                          "l’extension '.whl' seront ajoutés au fichier" )
                         
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--makefile", action='store_true', help=msg_makefile)
@@ -294,7 +313,13 @@ def main() :
     args = parser.parse_args()
     
     # print(sys.argv)
+    # 'sys.argv' est une list de tous ce qui est passer comme argument à python.
+    # voir : https://docs.python.org/3.6/library/sys.html
+    
     # print(args)
+    # présente une list de tous les arguments qui ont été ajouter avec 'add_argument'
+    # et leurs état (True, False ou contenu)
+    
     if args.makefile :
         print( "mode : création des fichiers\n\n" )
         i_ist = C_pipParser()
