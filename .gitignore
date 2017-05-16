@@ -11,10 +11,10 @@ _5_*/
 _6_*/
 _7_*/
 *_v/
-./*/_build/
-./../_build/
-./_build/
-_build/
+#./*/_build/
+#./../_build/
+#./_build/
+#_build/
 
 ## [ listes des extentions a ignorer ]
 *.FCStd1

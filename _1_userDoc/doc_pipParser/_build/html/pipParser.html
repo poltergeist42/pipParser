@@ -1,0 +1,345 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pipParser &#8212; documentation pipParser 20170516</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '20170516',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Bug et ToDo-list" href="Bug_TODOList.html" />
+    <link rel="prev" title="pipParser" href="README_pipParser.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-_3_software.pipParser">
+<span id="pipparser"></span><h1>pipParser<a class="headerlink" href="#module-_3_software.pipParser" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="infos">
+<h2>Infos<a class="headerlink" href="#infos" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Projet:</th><td class="field-body">pipParser</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Nom du fichier:</th><td class="field-body">pipParser.py</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Version:</th><td class="field-body">20170516</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Licence:</th><td class="field-body">CC-BY-NC-SA</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Liens:</th><td class="field-body"><a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">https://creativecommons.org/licenses/by-nc-sa/4.0/</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">dev language:</th><td class="field-body">Python 3.6</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="descriptif">
+<h2>Descriptif<a class="headerlink" href="#descriptif" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Projet:</th><td class="field-body"><p class="first">Ce petit programme permet de créer le fichier &#8216;requierement&#8217; à
+partir de la commande &#8216;pip3 freeze&#8217;. Ce fichier est utile pour
+l’installation des paquet sous python.</p>
+<p>Une première variante du fichier &#8216;nettoyée&#8217; des numéros de versions
+peut être généré.</p>
+<p class="last">Une seconde version &#8216;customisée&#8217; peut être généré pour n&#8217;avoir
+que les paquet présent dans un dossier donné.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<div class="section" id="lexique">
+<h2>lexique<a class="headerlink" href="#lexique" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name"><strong>v_</strong>:</th><td class="field-body">variable</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>l_</strong>:</th><td class="field-body">list</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>t_</strong>:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>d_</strong>:</th><td class="field-body">dictionnaire</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>f_</strong>:</th><td class="field-body">fonction</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>C_</strong>:</th><td class="field-body">Class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name"><strong>i_</strong>:</th><td class="field-body">Instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name"><strong>m_</strong>:</th><td class="field-body">Matrice</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<hr class="docutils" />
+<dl class="class">
+<dt id="_3_software.pipParser.C_pipParser">
+<em class="property">class </em><code class="descclassname">_3_software.pipParser.</code><code class="descname">C_pipParser</code><a class="headerlink" href="#_3_software.pipParser.C_pipParser" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Class permettant d&#8217;effectuer des traitemant sur le fichier &#8216;requierments&#8217; générer
+par la commande &#8216;pip freeze&#8217;</p>
+<dl class="method">
+<dt id="_3_software.pipParser.C_pipParser.f_getFileName">
+<code class="descname">f_getFileName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.pipParser.C_pipParser.f_getFileName" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne le nom des fichiers sous la forme d&#8217;un tuple</p>
+<p>Ces nom sont sous la forme :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">*.</span><span class="n">txt</span>           <span class="o">--&gt;</span> <span class="n">Fichier</span> <span class="n">générer</span> <span class="n">par</span> <span class="n">pip</span>
+<span class="o">*</span><span class="n">_noVers</span><span class="o">.</span><span class="n">txt</span>    <span class="o">--&gt;</span> <span class="n">Fichier</span> <span class="n">sans</span> <span class="n">les</span> <span class="n">numéros</span> <span class="n">de</span> <span class="n">version</span> <span class="n">des</span> <span class="n">paquets</span>
+<span class="o">*</span><span class="n">_custom</span>        <span class="o">--&gt;</span> <span class="n">Fichier</span> <span class="n">personalisé</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.pipParser.C_pipParser.f_getFilePath">
+<code class="descname">f_getFilePath</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.pipParser.C_pipParser.f_getFilePath" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne le chemin dans lequel est créer le fichier.</p>
+<p><strong>N.B</strong> : Ce chemin correspond au répertoire courant (workdir).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.pipParser.C_pipParser.f_getFullFileName">
+<code class="descname">f_getFullFileName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.pipParser.C_pipParser.f_getFullFileName" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Retourne le Nom des fichiers précédés de leur chemin (retourne un tuple).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.pipParser.C_pipParser.f_makeCustomFile">
+<code class="descname">f_makeCustomFile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.pipParser.C_pipParser.f_makeCustomFile" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Permet de créer le fichier &#8216;requierment&#8217; en parcourant le dossier &#8216;_v_dir&#8217;.
+Tous les fichiers portant l’extension &#8216;.whl&#8217; seront ajoutés au fichier
+&#8216;_v_customFile&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.pipParser.C_pipParser.f_makeNoVersFile">
+<code class="descname">f_makeNoVersFile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.pipParser.C_pipParser.f_makeNoVersFile" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Permet de créer le ficher noVers à partir du fichier générer par pip</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.pipParser.C_pipParser.f_makeRequiermentFile">
+<code class="descname">f_makeRequiermentFile</code><span class="sig-paren">(</span><em>v_dirPath=None</em>, <em>v_fileName=None</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.pipParser.C_pipParser.f_makeRequiermentFile" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Permet de créer le fichier requierement de pip freeze. la commande qui va
+être exécutée sera :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">freeze</span> <span class="o">&gt;</span> <span class="p">[</span><span class="n">nom_du_fichier</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>v_dirPath</strong> : Permet de définir le chemin dans lequel est créé le fichier.
+Ce chemin est utilisé comme répertoire de travail (workdir). Si il est définie, la méthode &#8216;f_setFilePath()&#8217; sera appelée.</p>
+<p><strong>v_fileName</strong> : Permet de définir le nom du fichier. Si il est définie, la
+méthode &#8216;f_setFileName()&#8217; sera appelée.</p>
+<p><strong>N.B</strong> : Le format attendu est de type &#8216;str&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.pipParser.C_pipParser.f_setFileName">
+<code class="descname">f_setFileName</code><span class="sig-paren">(</span><em>v_fileName=None</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.pipParser.C_pipParser.f_setFileName" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Permet de définir le nom du fichier.
+<strong>N.B</strong> : Le format attendu est de type &#8216;str&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.pipParser.C_pipParser.f_setFilePath">
+<code class="descname">f_setFilePath</code><span class="sig-paren">(</span><em>v_localWorkDir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.pipParser.C_pipParser.f_setFilePath" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Permet de définir le chemin dans lequel est créé le fichier. Ce chemin est
+utilisé comme répertoire de travail (workdir).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.pipParser.C_pipParser.f_setFullFileName">
+<code class="descname">f_setFullFileName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.pipParser.C_pipParser.f_setFullFileName" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Permet définir les fichiers et leur chemin sous la forme d&#8217;un tuple 
+comportant deux string composées de cette façon :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">chemin_du_fichier</span><span class="p">]</span>\<span class="p">[</span><span class="n">nom_du_fichier</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="_3_software.pipParser.main">
+<code class="descclassname">_3_software.pipParser.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.pipParser.main" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction principale</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
+<li><strong>makefile</strong> &#8211; <p>-m ou &#8211;makefile. Permet de passer en mode création de
+fichier.</p>
+<p>Le premier fichier est le fichier générer par la commande :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">freeze</span> <span class="o">&gt;</span> <span class="n">nom_du_fichier</span><span class="o">.</span> 
+</pre></div>
+</div>
+<p>Ce fichier sera au minimum l&#8217;unique fichier générer.</p>
+</li>
+<li><strong>filename</strong> &#8211; <p>-f ou &#8211;filename. Permet de spécifier le nom du fichier.
+Ce nom doit être spécifier sans l&#8217;extension car
+l&#8217;extension &#8216;.txt&#8217; sera automatiquement ajoutée.</p>
+<p>Si aucun nom n&#8217;est renseigné , le nom du fichier par défaut
+sera : &#8216;myRequierment.txt&#8217;</p>
+</li>
+<li><strong>pathfile</strong> &#8211; <p>-p ou &#8211;pathfile. Permet de spécifier le chemin d&#8217;accès
+des fichiers.</p>
+<p>Si aucun chemin n&#8217;est renseigné, le chemin par défaut sera
+le répertoire courant( &#8216;.&#8217; ).</p>
+</li>
+<li><strong>askinfo</strong> &#8211; <p>-a ou &#8211;askinfo. Lance une invite de commande pour remplir
+le nom du fichier et son chemin d&#8217;accès.</p>
+<p>Si l&#8217;un des arguments &#8216;filename&#8217; ou &#8216;pathfile&#8217; et passé en
+même temps que &#8216;askinfo&#8217;, ils seront ignoré.</p>
+<p>Si aucun nom ou chemin n&#8217;est renseigné dans l&#8217;invite de
+commande, le nom du fichier par défaut sera :
+&#8216;myRequierment.txt&#8217; et le chemin par défaut sera le répertoire
+courrant( &#8216;.&#8217; ).</p>
+</li>
+<li><strong>novers</strong> &#8211; &#8211;novers. Si cet attribut est ajouté, un fichier
+supplémentaire sera généré. Ce fichier est une copie du
+premier nettoyer des numéros de versions qui accompagne
+normalement chaque noms présent dans le fichiers généré par
+&#8216;pip&#8217;. Ce fichier sera nommé de la même façon que
+le premier avec le suffixe &#8216;_noVers&#8217; en plus.</li>
+<li><strong>custom</strong> &#8211; &#8211;custom. Si cet attribut est ajouté, un fichier
+&#8216;requierement&#8217; sera créer en parcourant le chemin dossier
+donné dans &#8216;pathfile&#8217;. Tous les fichiers portant l’extension
+&#8216;.whl&#8217; seront ajoutés au fichier. Ce fichier sera nommé de la
+même façon que le premier avec le suffixe &#8216;_custom&#8217; en plus.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des Matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pipParser</a><ul>
+<li><a class="reference internal" href="#infos">Infos</a></li>
+<li><a class="reference internal" href="#descriptif">Descriptif</a></li>
+<li><a class="reference internal" href="#lexique">lexique</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="README_pipParser.html" title="Chapitre précédent">pipParser</a></li>
+      <li>Next: <a href="Bug_TODOList.html" title="Chapitre suivant">Bug et ToDo-list</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/pipParser.rst.txt"
+            rel="nofollow">Montrer le code source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Poltergeist42.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/pipParser.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
